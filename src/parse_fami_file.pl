@@ -4,6 +4,9 @@ use strict;
 use warnings;
 use JSON;
 
+# ==============================================================================
+# Globals
+
 our %project = (
     info       => {},
     settings   => {},
@@ -55,7 +58,11 @@ sub handle_macro {
     # MACRO [type] [index] [loop] [release] [setting] : [macro]
     my $line = shift;
     my @matches;
-    unless (@matches = ($line =~ /^\s*(MACRO\w*)\s+(\d+)\s+(\d+)\s+(-?\d+)\s+(-?\d+)\s+(\d+)\s*:\s*(.*)/)) { return; }
+    unless (@matches = ($line =~ /^\s*
+        (MACRO\w*)\s+
+        (\d+)\s+(\d+)\s+(\-?\d+)\s+(\-?\d+)\s+(\d+)
+        \s*\:\s*
+        (.*)/x)) { return; }
     my ($tag, $type, $index, $loop, $release, $setting, $data) = @matches;
     my @sequence = split /\s+/, $data;
 
@@ -75,23 +82,28 @@ sub handle_inst_basic {
     # INST2A03 [index] [seq_vol] [seq_arp] [seq_pit] [seq_hpi] [seq_dut] [name]
     my $line = shift;
     my @matches;
-    unless (@matches = ($line =~ /^\s*(INST20A3|INSTVRC6|INSTS5B)\s+(\d+)\s+(-?\d+)\s+(-?\d+)\s+(-?\d+)\s+(-?\d+)\s+(-?\d+)\s*\"(.*)\"/x)) { return; }
+    unless (@matches = ($line =~ /^\s*
+        (INST20A3|INSTVRC6|INSTS5B)\s+
+        (\d+)\s+
+        (\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s*
+        \"(.*)\"/x)) { return; }
     my ($tag, $index, $seq_vol, $seq_arp, $seq_pit, $seq_hpi, $seq_dut, $name) = @matches;
-    my ($vol, $arp, $pit, $hpi, $dut) = (0 .. 4);
-
     $project{instruments}{$index} = {
         tag  => $tag,
         name => $name
     };
-
-    my $macro_tag = $tag; $macro_tag =~ s/INST/MACRO/;
+    
+    my ($VOL_TYPE, $ARP_TYPE, $PIT_TYPE, $HPI_TYPE, $DUT_TYPE) = (0 .. 4);
     my %macros = (
-        macro_vol => [$vol, $seq_vol],
-        macro_arp => [$arp, $seq_arp],
-        macro_pit => [$pit, $seq_pit],
-        macro_hpi => [$hpi, $seq_hpi],
-        macro_dut => [$dut, $seq_dut]
+        macro_vol => [$VOL_TYPE, $seq_vol],
+        macro_arp => [$ARP_TYPE, $seq_arp],
+        macro_pit => [$PIT_TYPE, $seq_pit],
+        macro_hpi => [$HPI_TYPE, $seq_hpi],
+        macro_dut => [$DUT_TYPE, $seq_dut]
     );
+
+    my $macro_tag = $tag; 
+    $macro_tag =~ s/INST/MACRO/;
 
     for my $k (keys %macros) {
         my ($type, $seq) = @{$macros{$k}};
@@ -111,7 +123,7 @@ sub handle_inst_vrc7 {
         ([0-9A-F]{2})\s+([0-9A-F]{2})\s+([0-9A-F]{2})\s+([0-9A-F]{2})\s+
         ([0-9A-F]{2})\s+([0-9A-F]{2})\s+([0-9A-F]{2})\s+([0-9A-F]{2})\s*
         \"(.*)\"/x)) { return; }
-    my ($tag, $index, $patch, $r0,$r1,$r2,$r3,$r4,$r5,$r6,$r7,$name) = @matches;
+    my ($tag, $index, $patch, $r0, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $name) = @matches;
     $project{instruments}{$index} = {
         tag   => $tag,
         index => $index,
@@ -126,7 +138,10 @@ sub handle_inst_fds {
     # INSTFDS [index] [mod_enable] [mod_speed] [mod_depth] [mod_delay] [name]
     my $line = shift;
     my @matches;
-    unless (@matches = ($line =~ /^\s*(INSTFDS)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\"(.*)\"/)) { return; }
+    unless (@matches = ($line =~ /^\s*
+        (INSTFDS)\s+
+        (\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*
+        \"(.*)\"/x)) { return; }
     my ($tag, $index, $mod_enable, $mod_speed, $mod_depth, $mod_delay, $name) = @matches;
 
     $project{instruments}{$index} = {
@@ -145,20 +160,13 @@ sub handle_inst_n163 {
     my $line = shift;
     my @matches;
     unless (@matches = ($line =~ /^\s*
-        (INSTN163)\s+ # tag
-        (\d+)\s+    # idx
-        (\-?\d+)\s+ # vol
-        (\-?\d+)\s+ # arp
-        (\-?\d+)\s+ # pit
-        (\-?\d+)\s+ # hpi
-        (\-?\d+)\s+ # dut
-        (\d+)\s+    # w_size
-        (\d+)\s+    # w_pos
-        (\d+)\s*    # w_count
-        \"(.*)\"    # name
+        (INSTN163)\s+ 
+        (\d+)\s+    
+        (\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s+(\-?\d+)\s+
+        (\d+)\s+(\d+)\s+(\d+)\s*
+        \"(.*)\"    
     /x)) { return; }
     my ($tag, $index, $seq_vol, $seq_arp, $seq_pit, $seq_hpi, $seq_dut, $w_size, $w_pos, $w_count, $name) = @matches;
-
     $project{instruments}{$index} = {
         tag  => $tag,
         name => $name,
@@ -167,15 +175,17 @@ sub handle_inst_n163 {
         w_count => $w_count,
     };
 
-    my ($vol, $arp, $pit, $hpi, $dut) = (0 .. 4);
-    my $macro_tag = $tag; $macro_tag =~ s/INST/MACRO/;
+    my ($VOL_TYPE, $ARP_TYPE, $PIT_TYPE, $HPI_TYPE, $DUT_TYPE) = (0 .. 4);
     my %macros = (
-        macro_vol => [$vol, $seq_vol],
-        macro_arp => [$arp, $seq_arp],
-        macro_pit => [$pit, $seq_pit],
-        macro_hpi => [$hpi, $seq_hpi],
-        macro_dut => [$dut, $seq_dut]
+        macro_vol => [$VOL_TYPE, $seq_vol],
+        macro_arp => [$ARP_TYPE, $seq_arp],
+        macro_pit => [$PIT_TYPE, $seq_pit],
+        macro_hpi => [$HPI_TYPE, $seq_hpi],
+        macro_dut => [$DUT_TYPE, $seq_dut]
     );
+
+    my $macro_tag = $tag; 
+    $macro_tag =~ s/INST/MACRO/;
 
     for my $k (keys %macros) {
         my ($type, $seq) = @{$macros{$k}};
@@ -256,7 +266,7 @@ sub handle_row {
 }
 
 # ==============================================================================
-# Handlers Dispatcher
+# Handlers Table
 
 my @dtable = (
     [qr/^(TITLE|AUTHOR|COPYRIGHT|COMMENT)/, \&handle_info],
@@ -273,10 +283,11 @@ my @dtable = (
 # ==============================================================================
 # Main
 
-die "Usage: $0 <input file>\n" unless @ARGV >= 1;
-our $input = $ARGV[0];
-
 sub read_file {
+    # Get input from cmdline
+    die "Usage: $0 <input file>\n" unless @ARGV >= 1;
+    my $input = $ARGV[0];
+    
     # Read file:
     open my $FH, '<', $input or die $!;
 
@@ -284,9 +295,7 @@ sub read_file {
     while (my $line = <$FH>) {
         chomp $line;
         # skip on comment line or blank line
-        if ($line =~ /^\s*#/ || $line =~ /^\s*$/) {
-            next;
-        };
+        if ($line =~ /^\s*#/ || $line =~ /^\s*$/) { next; }
 
         for my $h (@dtable) {
             if ($line =~ $h->[$MATCHER]) {
