@@ -1,0 +1,922 @@
+{
+   "author" : {
+      "author" : {
+         "info" : "the document's author",
+         "type" : "string"
+      }
+   },
+   "columns" : {
+      "columns" : {
+         "info" : "number of effect columns for each channel, where x is number of cols designated by EXPANSION.",
+         "range" : {
+            "lower" : "1",
+            "upper" : "64"
+         },
+         "type" : "int_list"
+      }
+   },
+   "comment" : {
+      "comment" : {
+         "info" : "line of text to add",
+         "type" : "string"
+      }
+   },
+   "copyright" : {
+      "copyright" : {
+         "info" : "the document's copyright information",
+         "type" : "string"
+      }
+   },
+   "dpcm" : {
+      "data" : {
+         "info" : "contents of the sample",
+         "range" : {
+            "lower" : 0,
+            "upper" : 255
+         },
+         "type" : "hex_list"
+      }
+   },
+   "dpcmdef" : {
+      "index" : {
+         "info" : "index of the sample",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "original filename of sample",
+         "type" : "string"
+      },
+      "size" : {
+         "info" : "size in bytes to allocate for the sample",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4081"
+         },
+         "type" : "int"
+      }
+   },
+   "expansion" : {
+      "chips" : {
+         "info" : "bitfield representing expansion chips used: 1=VRC6, 2=VRC7, 4=FDS, 8=MMC5, 16=N163, 32=S5B",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      }
+   },
+   "fdsmacro" : {
+      "inst" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "1 for no loop",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "macro" : {
+         "info" : "macro sequence",
+         "range" : {
+            "lower" : "-128",
+            "upper" : "127"
+         },
+         "type" : "int_list"
+      },
+      "release" : {
+         "info" : "1 for no release",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "setting" : {
+         "info" : "macro setting (for arpeggio: 0=absolute, 1=fixed, 2=relative)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "type" : {
+         "info" : "0=volume, 1=arpeggio, 2=pitch",
+         "range" : {
+            "lower" : "0",
+            "upper" : "2"
+         },
+         "type" : "int"
+      }
+   },
+   "fdsmod" : {
+      "data" : {
+         "info" : "contents of the table, must be 32 elements long",
+         "range" : {
+            "lower" : "0",
+            "upper" : "7"
+         },
+         "type" : "int_list"
+      },
+      "inst" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      }
+   },
+   "fdswave" : {
+      "data" : {
+         "info" : "contents of the waveform, must be 64 elements long",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int_list"
+      },
+      "inst" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      }
+   },
+   "framerate" : {
+      "fps" : {
+         "info" : "music framerate, 0 for machine default",
+         "range" : {
+            "lower" : "0",
+            "upper" : "800"
+         },
+         "type" : "int"
+      }
+   },
+   "groove" : {
+      "groove_sequence" : {
+         "info" : "represents speed change per row.",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int_list"
+      },
+      "index" : {
+         "info" : "integer representing the groove number. default groove is the first in groove_list.",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "sizeof" : {
+         "info" : "len of groove_sequence",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      }
+   },
+   "inst2a03" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      },
+      "seq_arp" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_dut" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_hpi" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_pit" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_vol" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      }
+   },
+   "instfds" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "mod_delay" : {
+         "info" : "modulator delay",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "mod_depth" : {
+         "info" : "modulator depth",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "mod_enable" : {
+         "info" : "0 for modulator disabled, 1 for enabled",
+         "range" : {
+            "lower" : "0",
+            "upper" : "1"
+         },
+         "type" : "int"
+      },
+      "mod_speed" : {
+         "info" : "modulator speed",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4905"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      }
+   },
+   "instn163" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      },
+      "seq_arp" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_hpi" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_pit" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_vol" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_wav" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "w_count" : {
+         "info" : "number of waves",
+         "range" : {
+            "lower" : "0",
+            "upper" : "16"
+         },
+         "type" : "int"
+      },
+      "w_pos" : {
+         "info" : "wave memory position",
+         "range" : {
+            "lower" : "0",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "w_size" : {
+         "info" : "wave length",
+         "range" : {
+            "lower" : "0",
+            "upper" : "32"
+         },
+         "type" : "int"
+      }
+   },
+   "insts5b" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      },
+      "seq_arp" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_hpi" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_pit" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_ton" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_vol" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      }
+   },
+   "instvrc6" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      },
+      "seq_arp" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_hpi" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_pit" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_vol" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "seq_wid" : {
+         "info" : "1 for none",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      }
+   },
+   "instvrc7" : {
+      "index" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "name" : {
+         "info" : "name of the instrument",
+         "type" : "string"
+      },
+      "patch" : {
+         "info" : "VRC7 patch used by the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "15"
+         },
+         "type" : "int"
+      },
+      "register" : {
+         "info" : "custom patch register data",
+         "range" : {
+            "lower" : 0,
+            "upper" : 255
+         },
+         "type" : "hex_list"
+      }
+   },
+   "keydpcm" : {
+      "delta" : {
+         "info" : "1 for off",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "inst" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "0 for no loop, 1 for loop",
+         "range" : {
+            "lower" : "0",
+            "upper" : "1"
+         },
+         "type" : "int"
+      },
+      "loop_point" : {
+         "info" : "loop point of the sample (32 byte increments)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "note" : {
+         "info" : "scale note of key",
+         "range" : {
+            "lower" : "0",
+            "upper" : "11"
+         },
+         "type" : "int"
+      },
+      "octave" : {
+         "info" : "octave of key",
+         "range" : {
+            "lower" : "0",
+            "upper" : "7"
+         },
+         "type" : "int"
+      },
+      "pitch" : {
+         "info" : "pitch of the sample",
+         "range" : {
+            "lower" : "0",
+            "upper" : "15"
+         },
+         "type" : "int"
+      },
+      "sample" : {
+         "info" : "index of the sample to play",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      }
+   },
+   "machine" : {
+      "machine" : {
+         "info" : "0 for NTSC, 1 for PAL",
+         "range" : {
+            "lower" : "0",
+            "upper" : "1"
+         },
+         "type" : "int"
+      }
+   },
+   "macro" : {
+      "index" : {
+         "info" : "index of the macro",
+         "range" : {
+            "lower" : "0",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "1 for no loop",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "macro" : {
+         "info" : "macro sequence",
+         "range" : {
+            "lower" : "-128",
+            "upper" : "127"
+         },
+         "type" : "int_list"
+      },
+      "release" : {
+         "info" : "1 for no release",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "setting" : {
+         "info" : "macro setting (for arpeggio: 0=absolute, 1=fixed, 2=relative, 3=scheme)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "type" : {
+         "info" : "pitch, 4=duty",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4"
+         },
+         "type" : "int"
+      }
+   },
+   "macron163" : {
+      "index" : {
+         "info" : "index of the macro",
+         "range" : {
+            "lower" : "0",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "1 for no loop",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "macro" : {
+         "info" : "macro sequence",
+         "range" : {
+            "lower" : "-128",
+            "upper" : "127"
+         },
+         "type" : "int_list"
+      },
+      "release" : {
+         "info" : "1 for no release",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "setting" : {
+         "info" : "macro setting (for arpeggio: 0=absolute, 1=fixed, 2=relative, 3=scheme)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "type" : {
+         "info" : "pitch, 4=wave",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4"
+         },
+         "type" : "int"
+      }
+   },
+   "macros5b" : {
+      "index" : {
+         "info" : "index of the macro",
+         "range" : {
+            "lower" : "0",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "1 for no loop",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "macro" : {
+         "info" : "macro sequence",
+         "range" : {
+            "lower" : "-128",
+            "upper" : "127"
+         },
+         "type" : "int_list"
+      },
+      "release" : {
+         "info" : "1 for no release",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "setting" : {
+         "info" : "macro setting (for arpeggio: 0=absolute, 1=fixed, 2=relative, 3=scheme)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "type" : {
+         "info" : "pitch, 4=tone",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4"
+         },
+         "type" : "int"
+      }
+   },
+   "macrovrc6" : {
+      "index" : {
+         "info" : "index of the macro",
+         "range" : {
+            "lower" : "0",
+            "upper" : "127"
+         },
+         "type" : "int"
+      },
+      "loop" : {
+         "info" : "1 for no loop",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "macro" : {
+         "info" : "macro sequence",
+         "range" : {
+            "lower" : "-128",
+            "upper" : "127"
+         },
+         "type" : "int_list"
+      },
+      "release" : {
+         "info" : "1 for no release",
+         "range" : {
+            "lower" : "-1",
+            "upper" : "253"
+         },
+         "type" : "int"
+      },
+      "setting" : {
+         "info" : "macro setting (for arpeggio: 0=absolute, 1=fixed, 2=relative, 3=scheme)",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "type" : {
+         "info" : "width",
+         "range" : {
+            "lower" : "0",
+            "upper" : "4"
+         },
+         "type" : "int"
+      }
+   },
+   "n163channels" : {
+      "channels" : {
+         "info" : "channels used by N163 expansion",
+         "range" : {
+            "lower" : "1",
+            "upper" : "8"
+         },
+         "type" : "int"
+      }
+   },
+   "n163wave" : {
+      "data" : {
+         "info" : "contents of the waveform, must be the same length as defined by the INSTN163 instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "15"
+         },
+         "type" : "int_list"
+      },
+      "inst" : {
+         "info" : "index of the instrument",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int"
+      },
+      "wave" : {
+         "info" : "index of the wave",
+         "range" : {
+            "lower" : "0",
+            "upper" : "15"
+         },
+         "type" : "int"
+      }
+   },
+   "order" : {
+      "frame" : {
+         "info" : "index of frame",
+         "range" : {
+            "lower" : 0,
+            "upper" : 127
+         },
+         "type" : "hex"
+      },
+      "list" : {
+         "info" : "pattern to use for each channel, len of list must match number of cols",
+         "range" : {
+            "lower" : 0,
+            "upper" : 127
+         },
+         "type" : "hex_list"
+      }
+   },
+   "pattern" : {
+      "pattern" : {
+         "info" : "index of pattern",
+         "range" : {
+            "lower" : 0,
+            "upper" : 127
+         },
+         "type" : "hex"
+      }
+   },
+   "row" : {
+      "row" : {
+         "info" : "contains music data",
+         "type" : "string"
+      }
+   },
+   "split" : {
+      "split" : {
+         "info" : "split point where Fxx effect sets tempo instead of speed",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      }
+   },
+   "title" : {
+      "title" : {
+         "info" : "the document's title",
+         "type" : "string"
+      }
+   },
+   "track" : {
+      "name" : {
+         "info" : "name of the track",
+         "type" : "string"
+      },
+      "pattern" : {
+         "info" : "length of patterns",
+         "range" : {
+            "lower" : "0",
+            "upper" : "256"
+         },
+         "type" : "int"
+      },
+      "speed" : {
+         "info" : "track speed",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      },
+      "tempo" : {
+         "info" : "track tempo",
+         "range" : {
+            "lower" : "0",
+            "upper" : "255"
+         },
+         "type" : "int"
+      }
+   },
+   "usegroove" : {
+      "tracks" : {
+         "info" : "tells the project which tracks use the default groove",
+         "range" : {
+            "lower" : "0",
+            "upper" : "63"
+         },
+         "type" : "int_list"
+      }
+   },
+   "vibrato" : {
+      "mode" : {
+         "info" : "0 for old style vibrato, 1 for new style",
+         "range" : {
+            "lower" : "0",
+            "upper" : "1"
+         },
+         "type" : "int"
+      }
+   }
+}
