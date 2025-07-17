@@ -9,7 +9,7 @@ Generate validation `.json` file:
 
 Convert FamiTracker text export file to `.json`:
 ```perl
-./main.pl <input.txt>
+./parse_fami_file.pl <fami_export.txt>
 ```
 
 ## License
